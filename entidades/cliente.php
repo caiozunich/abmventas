@@ -120,11 +120,11 @@ class Cliente {
     A.nombre,
     A.telefono,
     A.correo,
-    
+
 FROM
     clientes A
 ORDER BY
-    idcliente DESC");
+    idcliente DESC";
     $resultado = $mysqli->query($sql);
 
         if($resultado){

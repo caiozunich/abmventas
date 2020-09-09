@@ -2,9 +2,6 @@
 
 include_once "config.php";
 include_once "entidades/cliente.php";
-include_once "entidades/provincia.entidad.php";
-include_once "entidades/localidad.entidad.php";
-include_once "entidades/domicilio.entidad.php";
 
 $pg = "Edición de cliente";
 
@@ -82,8 +79,6 @@ if(isset($_GET["do"]) && $_GET["do"] == "buscarLocalidad" && $_GET["id"] && $_GE
     }
 
 
-$provincia = new Provincia();
-$aProvincias = $provincia->obtenerTodos();
 
 
 include_once("header.php"); 
@@ -225,45 +220,7 @@ $(document).ready( function () {
     });
 } );
 
- function fBuscarLocalidad(){
-            idProvincia = $("#lstProvincia option:selected").val();
-            $.ajax({
-                type: "GET",
-                url: "cliente-formulario.php?do=buscarLocalidad",
-                data: { id:idProvincia },
-                async: true,
-                dataType: "json",
-                success: function (respuesta) {
-                    $("#lstLocalidad option").remove();
-                    $("<option>", {
-                        value: 0,
-                        text: "Seleccionar",
-                        disabled: true,
-                        selected: true
-                    }).appendTo("#lstLocalidad");
-                
-                    for (i = 0; i < respuesta.length; i++) {
-                        $("<option>", {
-                            value: respuesta[i]["idlocalidad"],
-                            text: respuesta[i]["nombre"]
-                            }).appendTo("#lstLocalidad");
-                        }
-                    $("#lstLocalidad").prop("selectedIndex", "0");
-                }
-            });
-        }
-
-        function fAgregarDomicilio(){
-            var grilla = $('#grilla').DataTable();
-            grilla.row.add([
-                $("#lstTipo option:selected").text() + "<input type='hidden' name='txtTipo[]' value='"+ $("#lstTipo option:selected").val() +"'>",
-                $("#lstProvincia option:selected").text() + "<input type='hidden' name='txtProvincia[]' value='"+ $("#lstProvincia option:selected").val() +"'>",
-                $("#lstLocalidad option:selected").text() + "<input type='hidden' name='txtLocalidad[]' value='"+ $("#lstLocalidad option:selected").val() +"'>",
-                $("#txtDireccion").val() + "<input type='hidden' name='txtDomicilio[]' value='"+$("#txtDireccion").val()+"'>"
-            ]).draw();
-            $('#modalDomicilio').modal('toggle');
-            limpiarFormulario();
-        }
+ 
 
         function limpiarFormulario(){
             $("#lstTipo").val("");
